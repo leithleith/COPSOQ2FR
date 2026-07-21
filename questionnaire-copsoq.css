@@ -1,0 +1,237 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px 20px 40px;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f7fa;
+}
+.page-shell {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+.content-area {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 900px;
+}
+.left-menu {
+    position: sticky;
+    top: 20px;
+    flex: 0 0 220px;
+    width: 220px;
+    max-height: calc(100vh - 40px);
+    background: #2c3e50;
+    padding: 12px 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    z-index: 1000;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.left-menu button {
+    width: 200px;
+    max-width: 100%;
+    margin-top: 0;
+    padding: 10px 6px;
+    font-size: 0.9em;
+    white-space: normal;
+    line-height: 1.2;
+}
+h1 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 30px;
+}
+.intro {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.question {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-left: 4px solid #3498db;
+}
+.question-label {
+    font-weight: 600;
+    margin-bottom: 15px;
+    display: block;
+}
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-left: 10px;
+}
+.option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.option input[type="radio"] {
+    cursor: pointer;
+}
+.option label {
+    cursor: pointer;
+}
+button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px;
+    align-self: center;
+    transition: background-color 0.3s;
+}
+button:hover {
+    background-color: #2980b9;
+}
+button:disabled {
+    background-color: #95a5a6;
+    cursor: not-allowed;
+}
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+.summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 0.95em;
+}
+.summary-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    width: fit-content;
+}
+.summary-table th {
+    background-color: #f2f5f7;
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    width: fit-content;
+}
+.results-section {
+    display: none;
+    margin-top: 30px;
+}
+.chart-card {
+    margin-bottom: 30px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+}
+.domaine {
+    margin-bottom: 30px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+.domaine-title {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+.echelle {
+    margin-bottom: 20px;
+    padding-left: 20px;
+    border-left: 3px solid #3498db;
+}
+.echelle-title {
+    font-weight: bold;
+    color: #2980b9;
+    margin-bottom: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.scale-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+.scale-bullet {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+.result-item {
+    margin-bottom: 8px;
+    padding: 8px;
+    background-color: white;
+    border-radius: 4px;
+}
+.result-question {
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+.result-answer {
+    color: #555;
+    font-style: italic;
+}
+.back-button {
+    background-color: #95a5a6;
+    margin-top: 20px;
+}
+.back-button:hover {
+    background-color: #7f8c8d;
+}
+.page-footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #d8dde3;
+    text-align: center;
+    font-size: 0.95em;
+    color: #5a6570;
+}
+.page-footer a {
+    color: #2c3e50;
+    text-decoration: none;
+    font-weight: 600;
+}
+.page-footer a:hover {
+    text-decoration: underline;
+}
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    .question {
+        padding: 15px;
+    }
+}
