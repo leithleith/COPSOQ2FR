@@ -342,11 +342,8 @@ function renderScaleIndicator(titleElement, echelle, score) {
     const bullet = document.createElement('span');
     bullet.className = 'scale-bullet';
     bullet.style.backgroundColor = getScoreColor(score);
-
     const label = document.createElement('span');
     label.textContent = `${echelle}`;
-    //label.textContent = `${echelle} — ${score}%`;
-
     titleElement.textContent = '';
     titleElement.appendChild(bullet);
     titleElement.appendChild(label);
@@ -379,12 +376,10 @@ function displayLoadedSingleFileResults(data) {
             echelleTitle.className = 'echelle-title';
             echelleTitle.textContent = echelle;
             echelleDiv.appendChild(echelleTitle);
-
             const items = groupedByDomaine[domaine][echelle];
             const total = items.reduce((sum, item) => sum + getScoreForAnswer(item, item.answerIndex), 0);
             const score = Math.round(total / items.length);
             renderScaleIndicator(echelleTitle, echelle, score);
-
             items.forEach(item => {
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'result-item';
@@ -545,18 +540,11 @@ function renderOverallChart(labelsOrDomainScores, datasets) {
                     display: false
                 },
                 tooltip: {
-                    //enabled: false
                     callbacks: {
                         label: function(context) {
-                            let label = context.dataset.label || '';
-
-                            if (label) {
-                                label += ': ';
-                            }
-                            if (context.parsed.y !== null) {
-                                //label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
-                            }
-                            return label;
+                            const label = context.dataset.label || '';
+                            //const value = context.parsed.r;
+                            return `${label}`;
                         }
                     }
                 },
@@ -568,7 +556,7 @@ function renderOverallChart(labelsOrDomainScores, datasets) {
             },
             elements: {
                 point: {
-                    pointRadius: 5,
+                    pointRadius: 7,
                     pointStyle: 'circle'
                 }
             }
