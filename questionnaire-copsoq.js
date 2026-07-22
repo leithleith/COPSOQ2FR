@@ -312,6 +312,33 @@ function calculateMax(values) {
     }
     return Math.max(...values);
 }
+function getContrastTextColor(backgroundColor) {
+    if (!backgroundColor || typeof backgroundColor !== 'string') {
+        return '#ffffff';
+    }
+    const normalizedColor = backgroundColor.replace('#', '');
+    const safeColor = normalizedColor.length === 3
+        ? normalizedColor.split('').map(char => char + char).join('')
+        : normalizedColor;
+    if (safeColor.length !== 6) {
+        return '#ffffff';
+    }
+    const red = parseInt(safeColor.slice(0, 2), 16);
+    const green = parseInt(safeColor.slice(2, 4), 16);
+    const blue = parseInt(safeColor.slice(4, 6), 16);
+    const luminance = (0.2126 * red + 0.7152 * green + 0.0722 * blue) / 255;
+    return luminance > 0.65 ? '#1f2937' : '#ffffff';
+}
+function getPointTooltipColor(dataset, dataIndex) {
+    if (!dataset) {
+        return '#2ecc71';
+    }
+    const availableColors = dataset.pointBackgroundColor || dataset.borderColor || dataset.backgroundColor;
+    if (Array.isArray(availableColors)) {
+        return availableColors[dataIndex] || availableColors[0] || '#2ecc71';
+    }
+    return availableColors || '#2ecc71';
+}
 function buildDomainSummary(answers) {
     const groupedByDomaine = {};
     answers.forEach(answer => {
@@ -523,12 +550,32 @@ function renderOverallChart(labelsOrDomainScores, datasets) {
     if (window.overallChart && typeof window.overallChart.destroy === 'function') {
         window.overallChart.destroy();
     }
+    const tooltipPointColorPlugin = {
+        id: 'tooltipPointColorPlugin',
+        beforeTooltipDraw(chart, args) {
+            const tooltip = args.tooltip;
+            const activePoint = tooltip.dataPoints && tooltip.dataPoints[0];
+            if (!activePoint) {
+                return;
+            }
+            const dataset = chart.data.datasets[activePoint.datasetIndex] || {};
+            const color = getPointTooltipColor(dataset, activePoint.dataIndex);
+            const textColor = getContrastTextColor(color);
+            tooltip.backgroundColor = color;
+            tooltip.titleColor = textColor;
+            tooltip.bodyColor = textColor;
+            tooltip.footerColor = textColor;
+            tooltip.borderColor = color;
+            tooltip.borderWidth = 1;
+        }
+    };
     window.overallChart = new Chart(ctx, {
         type: 'radar',
         data: {
             labels: labels,
             datasets: chartDatasets
         },
+        plugins: [tooltipPointColorPlugin],
         options: {
             responsive: true,
             scales: {
@@ -538,6 +585,11 @@ function renderOverallChart(labelsOrDomainScores, datasets) {
                     ticks: {
                         stepSize: 20,
                         display: false
+                    },
+                    pointLabels: {
+                        font: {
+                            size: 14
+                        }
                     }
                 }
             },
@@ -546,11 +598,25 @@ function renderOverallChart(labelsOrDomainScores, datasets) {
                     display: false
                 },
                 tooltip: {
+                    enabled: true,
+                    backgroundColor: '#333333',
+                    titleColor: '#ffffff',
+                    bodyColor: '#ffffff',
+                    footerColor: '#ffffff',
+                    borderColor: '#333333',
+                    borderWidth: 1,
                     callbacks: {
                         label: function(context) {
                             const label = context.dataset.label || '';
-                            //const value = context.parsed.r;
                             return `${label}`;
+                        },
+                        labelColor: function(context) {
+                            const dataset = context.dataset || {};
+                            const color = getPointTooltipColor(dataset, context.dataIndex);
+                            return {
+                                borderColor: color,
+                                backgroundColor: color
+                            };
                         }
                     }
                 }
