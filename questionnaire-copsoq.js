@@ -146,7 +146,7 @@ function saveFormToFile() {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = 'questionnaire-copsoq-sauvegarde.json';
+    link.download = `questionnaire-copsoq-sauvegarde${Date.now()}.json`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
