@@ -547,11 +547,6 @@ function renderOverallChart(labelsOrDomainScores, datasets) {
                             return `${label}`;
                         }
                     }
-                },
-                labels: {
-                    font: {
-                        size: 20
-                    }
                 }
             },
             elements: {
