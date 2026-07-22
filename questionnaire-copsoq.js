@@ -207,7 +207,11 @@ function readSavedFile(file) {
         reader.onload = function () {
             try {
                 const parsed = JSON.parse(reader.result);
-                resolve(validateSavedPayload(parsed, file.name));
+                const answers = validateSavedPayload(parsed, file.name);
+                resolve({
+                    fileName: file.name,
+                    answers: answers
+                });
             } catch (error) {
                 reject(error);
             }
@@ -225,7 +229,7 @@ async function loadSingleFormFile(event) {
     }
     try {
         const data = await readSavedFile(file);
-        displayLoadedSingleFileResults(data);
+        displayLoadedSingleFileResults(data.answers);
         document.getElementById('copsocForm').style.display = 'none';
         document.getElementById('submitButton').style.display = 'none';
         document.getElementById('resultsSection').style.display = 'block';
@@ -414,7 +418,9 @@ function renderLoadedFilesSummary(loadedFiles) {
     const scaleValuesByDomain = {};
     const allDomains = new Set();
     const datasets = [];
-    loadedFiles.forEach((fileAnswers, fileIndex) => {
+    loadedFiles.forEach((loadedFile, fileIndex) => {
+        const fileAnswers = loadedFile.answers || loadedFile;
+        const fileName = loadedFile.fileName || `Sauvegarde ${fileIndex + 1}`;
         const summary = buildDomainSummary(fileAnswers);
         const labels = Object.keys(summary.domainScores);
         labels.forEach(domain => allDomains.add(domain));
@@ -424,7 +430,7 @@ function renderLoadedFilesSummary(loadedFiles) {
         });
         const pointColors = data.map(score => getScoreColor(score));
         datasets.push({
-            label: `Sauvegarde ${fileIndex + 1}`,
+            label: fileName,
             data: data,
             fill: false,
             backgroundColor: pointColors.map(color => `${color}40`),
