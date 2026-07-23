@@ -331,13 +331,13 @@ function getContrastTextColor(backgroundColor) {
 }
 function getPointTooltipColor(dataset, dataIndex) {
     if (!dataset) {
-        return '#2ecc71';
+        return '#333333';
     }
     const availableColors = dataset.pointBackgroundColor || dataset.borderColor || dataset.backgroundColor;
     if (Array.isArray(availableColors)) {
-        return availableColors[dataIndex] || availableColors[0] || '#2ecc71';
+        return availableColors[dataIndex] || availableColors[0] || '#333333';
     }
-    return availableColors || '#2ecc71';
+    return availableColors || '#333333';
 }
 function buildDomainSummary(answers) {
     const groupedByDomaine = {};
